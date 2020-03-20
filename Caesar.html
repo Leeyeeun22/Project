@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>카이사르 암호 - Caesar Cipher</h1>
+    <input type="text" id="textBox">
+    <input id="number">
+    <input type="button" id="chButton" value="메세지 암호화">
+    <input type="text" id="Caresult">
+</body>
+<script>
+    const caesar = function(string, shift){
+    let result = [];  // result = ""는 안됨
+    shift = shift % 26; // 알파벳 수 26
+    for(let i=0; i<string.length; i++){ // 받은 문자열 길이만큼
+        const word = string.charCodeAt(i); // charCodeAt() 아스키코드로 변환
+        if(word == 32){ // 공백인 경우 (아스키코드 32)
+            result.push(""); // 공백으로 바꿈
+        }
+        else if(word >= 65 && word <= 90){ // 65~90 대문자, 97~122 소문자
+            if(word+shift > 90){ // 90을 넘어가는 경우 26을 빼준다
+                result.push(String.fromCharCode(word+shift-26));
+            }
+            else{ // 그게 아니면 암호화값을 더해준다
+                result.push(String.fromCharCode(word+shift));
+            }
+        }
+        else if(word >= 90 && word <= 122){ 
+            if(word + shift > 122){ // 122를 넘어가는 경우 26을 빼준다
+                result.push(String.fromCharCode(word+shift-26));
+            }
+            else{ // 그게 아니면 암호화값을 더해준다
+                result.push(String.fromCharCode(word+shift));
+            }
+        }
+    }
+    return result.join(""); // join() 문자열 합치기
+}
+    const text = document.getElementById("textBox");
+    const Shift = document.getElementById("number");
+    const Result = document.getElementById("Caresult");
+    const chbutton = document.getElementById("chButton");
+
+    chbutton.addEventListener("click",()=>{
+        Result.value = caesar(text.value, Shift.value);
+    })
+
+</script>
+</html>
